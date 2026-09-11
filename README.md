@@ -4,9 +4,11 @@
 
 ---
 
-## 👥 Thành viên phụ trách
+## 👥 Thành viên nhóm & Phân công nhiệm vụ (Team 2)
 * **Hà Gia Huy (Scrum Master Sprint 0)**: Setup Base Framework, DriverFactory, Page Objects & Test cases: Login đa persona (standard, locked, problem user), Catalog & Sắp xếp sản phẩm.
 * **Nguyễn Khánh Linh**: Page Objects & Test cases: Quản lý giỏ hàng (Add/Remove), Quy trình Checkout Step 1 & 2, Hoàn tất đơn hàng E2E.
+* **Lê Thị Hải Hà**: Thành viên Team 2 / Phụ trách Module API Restful-Booker.
+* **Trần Thị Quỳnh Chi**: Thành viên Team 2 / Phụ trách Module API Restful-Booker.
 * **Mentor / Product Owner**: Thầy Vũ Lê Minh
 
 ---
@@ -15,6 +17,7 @@
 * **Hệ thống Web E2E**: SauceDemo
 * **URL**: https://www.saucedemo.com
 * **Công nghệ**: Java 17, Selenium WebDriver, TestNG, Maven, Page Object Model (POM), Allure Report, GitLab CI.
+* **GitLab Repository**: https://gitlab.com/capstone_yah/saucedemo-ui-automation.git
 
 ---
 
@@ -32,9 +35,20 @@
 
 ---
 
-## 🌿 Git Workflow
+## 🌿 Git Workflow & Hướng dẫn Clone
+```bash
+# 1. Clone repository về máy
+git clone https://gitlab.com/capstone_yah/saucedemo-ui-automation.git
+cd saucedemo-ui-automation
+
+# 2. Chuyển sang nhánh develop
+git checkout develop
+
+# 3. Tạo nhánh feature từ develop để làm bài
+git checkout -b feature/<ten-tinh-nang>-<ten-ban>
+```
 * **Nhánh chính**: `main` (Production/Demo), `develop` (Tích hợp phát triển).
-* **Nhánh tính năng**: `feature/login-huy`, `feature/checkout-linh`.
+* **Nhánh tính năng gợi ý**: `feature/login-huy`, `feature/checkout-linh`.
 
 ---
 
