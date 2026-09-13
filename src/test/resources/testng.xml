@@ -2,8 +2,10 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="SauceDemo Web UI Suite" verbose="1">
     <test name="SauceDemo Tests">
-        <packages>
-            <package name="web"/>
-        </packages>
+        <classes>
+            <class name="web.LoginTest"/>
+            <class name="web.ProductTest"/>
+            <class name="web.LogoutTest"/>
+        </classes>
     </test>
 </suite>
