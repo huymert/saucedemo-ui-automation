@@ -13,6 +13,7 @@ public class CartPage extends BasePage {
             By.xpath("//div[@class='inventory_item_name' and text()='Sauce Labs Backpack']");
     private final By cartBadge =
             By.cssSelector(".shopping_cart_badge");
+    private final By checkoutButton = By.id("checkout");
 
     public CartPage(WebDriver driver) {
         super(driver);
@@ -39,5 +40,9 @@ public class CartPage extends BasePage {
 
     public String getCartBadgeCount() {
         return getText(cartBadge);
+    }
+    public CheckoutStepOnePage clickCheckout() {
+        click(checkoutButton);
+        return new CheckoutStepOnePage(driver);
     }
 }
