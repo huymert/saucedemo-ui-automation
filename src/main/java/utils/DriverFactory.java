@@ -9,6 +9,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DriverFactory {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -81,14 +83,26 @@ public class DriverFactory {
             case "chrome":
             default:
                 ChromeOptions chromeOptions = new ChromeOptions();
+
                 chromeOptions.addArguments("--remote-allow-origins=*");
                 chromeOptions.addArguments("--disable-notifications");
+
+                // Disable Chrome Password Manager / password leak warning
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                prefs.put("profile.password_manager_leak_detection", false);
+
+                chromeOptions.setExperimentalOption("prefs", prefs);
+                chromeOptions.addArguments("--disable-features=PasswordLeakDetection");
+
                 if (headless) {
                     chromeOptions.addArguments("--headless=new");
                     chromeOptions.addArguments("--window-size=1920,1080");
                     chromeOptions.addArguments("--no-sandbox");
                     chromeOptions.addArguments("--disable-dev-shm-usage");
                 }
+
                 return new ChromeDriver(chromeOptions);
         }
     }
