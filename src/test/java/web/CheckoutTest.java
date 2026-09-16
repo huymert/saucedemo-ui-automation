@@ -24,7 +24,6 @@ public class CheckoutTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify validation when Postal Code is empty.")
     public void testCheckoutWithoutPostalCode() {
-    public void testCheckoutWithoutPostalCode() {
         LoginPage loginPage = new LoginPage(driver);
         InventoryPage inventoryPage =
                 loginPage.login("standard_user", "secret_sauce");
