@@ -1,8 +1,12 @@
 package web;
-
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import pages.CartPage;
 import pages.CheckoutStepOnePage;
 import pages.CheckoutStepTwoPage;
@@ -10,41 +14,31 @@ import pages.InventoryPage;
 import pages.LoginPage;
 import pages.CheckoutCompletePage;
 
+@Epic("SauceDemo Web UI")
+@Feature("Checkout")
 public class CheckoutTest extends BaseTest {
 
-    // WEB-SC-07
-    @Test
-    public void testCheckoutWithoutPostalCode() {
 
-        // 1. Login
+    @Test(description = "WEB-SC-07: Kiểm tra validation khi bỏ trống Postal Code")
+    @Story("Checkout validation")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify validation when Postal Code is empty.")
+    public void testCheckoutWithoutPostalCode() {
+    public void testCheckoutWithoutPostalCode() {
         LoginPage loginPage = new LoginPage(driver);
         InventoryPage inventoryPage =
                 loginPage.login("standard_user", "secret_sauce");
-
-        // 2. Add product
         inventoryPage.addBackpackToCart();
-
-        // 3. Open Cart
         CartPage cartPage = inventoryPage.openCart();
-
-        // 4. Click Checkout
         CheckoutStepOnePage checkoutStepOnePage =
                 cartPage.clickCheckout();
-
         Assert.assertTrue(
                 checkoutStepOnePage.isPageOpened(),
                 "Checkout Step One page should be opened"
         );
-
-        // 5. Nhập First Name + Last Name
-        //    và cố tình bỏ trống Postal Code
         checkoutStepOnePage.enterFirstName("Linh");
         checkoutStepOnePage.enterLastName("Nguyen");
-
-        // 6. Click Continue
         checkoutStepOnePage.clickContinue();
-
-        // 7. Verify validation message
         Assert.assertEquals(
                 checkoutStepOnePage.getErrorMessage(),
                 "Error: Postal Code is required",
@@ -53,30 +47,23 @@ public class CheckoutTest extends BaseTest {
     }
 
 
-    // WEB-SC-08
-    @Test
+
+    @Test(description = "WEB-SC-08: Xác nhận tổng tiền thanh toán và thuế phí tại Checkout Overview")
+    @Story("Checkout overview")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify total price and tax calculation.")
     public void testVerifyCheckoutTotal() {
 
         LoginPage loginPage = new LoginPage(driver);
         InventoryPage inventoryPage =
                 loginPage.login("standard_user", "secret_sauce");
-
-        // 2. Add product
         inventoryPage.addBackpackToCart();
-
-        // 3. Open Cart
         CartPage cartPage = inventoryPage.openCart();
-
-        // 4. Go to Checkout Step 1
         CheckoutStepOnePage checkoutStepOnePage =
                 cartPage.clickCheckout();
-
-        // 5. Điền thông tin hợp lệ
         checkoutStepOnePage.enterFirstName("Linh");
         checkoutStepOnePage.enterLastName("Nguyen");
         checkoutStepOnePage.enterPostalCode("100000");
-
-        // 6. Continue sang Step 2
         System.out.println("First name = " + checkoutStepOnePage.getFirstNameValue());
         System.out.println("Last name = " + checkoutStepOnePage.getLastNameValue());
         System.out.println("Postal code = " + checkoutStepOnePage.getPostalCodeValue());
@@ -94,12 +81,10 @@ public class CheckoutTest extends BaseTest {
                 "Checkout Step Two page should be opened"
         );
 
-        // 7. Lấy các giá trị tiền
         double itemTotal = checkoutStepTwoPage.getItemTotal();
         double tax = checkoutStepTwoPage.getTax();
         double total = checkoutStepTwoPage.getTotal();
 
-        // 8. Verify Total = Item Total + Tax
         Assert.assertEquals(
                 total,
                 itemTotal + tax,
@@ -107,7 +92,11 @@ public class CheckoutTest extends BaseTest {
                 "Total should equal Item Total + Tax"
         );
     }
-    @Test
+
+    @Test(description = "WEB-SC-09: Hoàn tất đơn hàng mua sắm E2E")
+    @Story("Order completion")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify successful order completion.")
     public void testCompleteOrderSuccessfully() {
 
         LoginPage loginPage = new LoginPage(driver);
