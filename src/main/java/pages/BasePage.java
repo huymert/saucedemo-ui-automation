@@ -5,6 +5,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,6 +36,18 @@ public abstract class BasePage {
                 elem.click();
                 return true;
             } catch (StaleElementReferenceException e) {
+                return false;
+            }
+        });
+    }
+
+    protected void clickWithJs(By locator) {
+        wait.until(d -> {
+            try {
+                WebElement elem = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", elem);
+                return true;
+            } catch (Exception e) {
                 return false;
             }
         });
