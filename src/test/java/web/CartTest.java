@@ -1,14 +1,24 @@
 package web;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.InventoryPage;
 import pages.LoginPage;
 
+@Epic("SauceDemo Web UI")
+@Feature("Cart")
 public class CartTest extends BaseTest {
-
-    @Test
+    @Test(description = "WEB-SC-05: Thêm sản phẩm vào giỏ hàng thành công")
+    @Story("Add product to cart")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that standard_user can add a product to the shopping cart.")
     public void testAddTwoProductsToCart() {
 
         LoginPage loginPage = new LoginPage(driver);
@@ -35,7 +45,10 @@ public class CartTest extends BaseTest {
         );
     }
 
-    @Test
+    @Test(description = "WEB-SC-06: Xóa sản phẩm khỏi giỏ hàng thành công")
+    @Story("Remove product from cart")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that user can remove a product from the shopping cart.")
     public void testRemoveProductFromCart() {
 
 
