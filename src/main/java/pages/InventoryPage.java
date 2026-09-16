@@ -13,6 +13,7 @@ public class InventoryPage extends BasePage {
     private final By sortDropdown = By.cssSelector("[data-test='product-sort-container']");
     private final By itemPrices = By.cssSelector(".inventory_item_price");
     private final By menuButton = By.id("react-burger-menu-btn");
+    private final By menuWrap = By.className("bm-menu-wrap");
     private final By logoutLink = By.id("logout_sidebar_link");
 
     public InventoryPage(WebDriver driver) {
@@ -41,11 +42,17 @@ public class InventoryPage extends BasePage {
 
     public void openMenu() {
         click(menuButton);
+        wait.until(ExpectedConditions.attributeToBe(menuWrap, "aria-hidden", "false"));
     }
 
     public LoginPage logout() {
         openMenu();
-        click(logoutLink);
+        WebElement logoutBtn = wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
+        try {
+            logoutBtn.click();
+        } catch (Exception e) {
+            clickWithJs(logoutLink);
+        }
         return new LoginPage(driver);
     }
 }
