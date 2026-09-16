@@ -47,12 +47,8 @@ public class InventoryPage extends BasePage {
 
     public LoginPage logout() {
         openMenu();
-        WebElement logoutBtn = wait.until(ExpectedConditions.elementToBeClickable(logoutLink));
-        try {
-            logoutBtn.click();
-        } catch (Exception e) {
-            clickWithJs(logoutLink);
-        }
+        clickWithJs(logoutLink);
+        wait.until(ExpectedConditions.urlMatches(".*saucedemo\\.com/?$|.*saucedemo\\.com/index\\.html.*"));
         return new LoginPage(driver);
     }
 }
