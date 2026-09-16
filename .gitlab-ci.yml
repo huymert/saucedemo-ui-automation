@@ -26,6 +26,9 @@ run_ui_tests:
     paths:
       - target/surefire-reports
       - target/allure-results
+    reports:
+      junit:
+        - target/surefire-reports/junitreports/TEST-*.xml
     expire_in: 1 week
 
 pages:
