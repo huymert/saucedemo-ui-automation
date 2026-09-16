@@ -6,6 +6,8 @@
             <class name="web.LoginTest"/>
             <class name="web.ProductTest"/>
             <class name="web.LogoutTest"/>
+            <class name="web.CartTest"/>
+            <class name="web.CheckoutTest"/>
         </classes>
     </test>
 </suite>
