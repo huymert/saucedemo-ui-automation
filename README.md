@@ -1,65 +1,132 @@
 # SauceDemo Web UI Automation Framework
 
-> **Module 1: Web UI Automation Testing - Capstone Project (Team 2 - Rikkei Edu)**
+[![Java](https://img.shields.io/badge/Java-17-orange.svg?style=for-the-badge&logo=openjdk)](https://www.oracle.com/java/)
+[![Selenium](https://img.shields.io/badge/Selenium-4.21.0-43B02A.svg?style=for-the-badge&logo=selenium)](https://www.selenium.dev/)
+[![TestNG](https://img.shields.io/badge/TestNG-7.10.2-red.svg?style=for-the-badge&logo=testng)](https://testng.org/)
+[![Maven](https://img.shields.io/badge/Maven-3.x-C71A36.svg?style=for-the-badge&logo=apachemaven)](https://maven.apache.org/)
+[![Allure Report](https://img.shields.io/badge/Allure%20Report-2.27.0-blueviolet.svg?style=for-the-badge&logo=qameta)](https://qameta.io/)
+
+A modern, production-grade **Web UI Automation Testing Framework** built for the **SauceDemo** e-commerce platform ([saucedemo.com](https://www.saucedemo.com)). Engineered with the **Page Object Model (POM)** design pattern, thread-safe **DriverFactory**, dynamic configuration management, custom test listeners, and interactive **Allure Reports** with automated screenshot capture on test failure.
 
 ---
 
-## 👥 Thành viên nhóm & Phân công nhiệm vụ (Team 2)
-* **Hà Gia Huy (Scrum Master Sprint 0)**: Setup Base Framework, DriverFactory, Page Objects & Test cases: Login đa persona (standard, locked, problem user), Catalog & Sắp xếp sản phẩm.
-* **Nguyễn Khánh Linh**: Page Objects & Test cases: Quản lý giỏ hàng (Add/Remove), Quy trình Checkout Step 1 & 2, Hoàn tất đơn hàng E2E.
-* **Lê Thị Hải Hà**: Thành viên Team 2 / Phụ trách Module API Restful-Booker.
-* **Trần Thị Quỳnh Chi**: Thành viên Team 2 / Phụ trách Module API Restful-Booker.
-* **Mentor / Product Owner**: Thầy Vũ Lê Minh
+## 📌 Framework Highlights & Architecture
+
+* **Design Pattern**: Page Object Model (POM) separating UI locators and page actions from test verification logic.
+* **Driver Management**: Thread-safe `DriverFactory` supporting **Google Chrome**, **Mozilla Firefox**, **Microsoft Edge**, and CI/CD-ready **Headless Mode**.
+* **Configuration Management**: Centralized `config.properties` read via `ConfigReader` with fallback options and command-line overrides (`-Dheadless=true`).
+* **Test Orchestration**: TestNG suite (`testng.xml`) with structured test groups, dependencies, and execution sequencing.
+* **Automated Failure Evidence**: Custom `TestListener` hooked into `AllureManager` to automatically capture and embed full-resolution PNG screenshots on any test failure.
+* **CI/CD Integration**: Pre-configured for automated execution in Dockerized CI pipelines with Discord webhook notifications.
 
 ---
 
-## 🌐 Hệ thống kiểm thử
-* **Hệ thống Web E2E**: SauceDemo
-* **URL**: https://www.saucedemo.com
-* **Công nghệ**: Java 17, Selenium WebDriver, TestNG, Maven, Page Object Model (POM), Allure Report, GitLab CI.
-* **GitLab Repository**: https://gitlab.com/capstone_yah/saucedemo-ui-automation.git
+## 🏗️ Project Structure
 
----
-
-## 📋 10 Test Scenarios Web UI (SauceDemo)
-1. `[WEB-SC-01]` **[High]** Login thành công với `standard_user`.
-2. `[WEB-SC-02]` **[High]** Login thất bại hiển thị đúng thông báo với `locked_out_user`.
-3. `[WEB-SC-03]` **[Medium]** Login validation: Báo lỗi khi bỏ trống username hoặc password.
-4. `[WEB-SC-04]` **[Medium]** Lọc & sắp xếp danh sách sản phẩm theo giá tăng dần (Price: low to high).
-5. `[WEB-SC-05]` **[High]** Thêm sản phẩm vào giỏ hàng và kiểm tra badge số lượng cập nhật đúng.
-6. `[WEB-SC-06]` **[Medium]** Xóa sản phẩm khỏi giỏ hàng trực tiếp từ trang Cart.
-7. `[WEB-SC-07]` **[Medium]** Checkout Step 1: Kiểm tra validate bắt buộc nhập Postal Code.
-8. `[WEB-SC-08]` **[High]** Checkout Step 2: Kiểm tra tổng tiền thanh toán (Item total + Tax = Total).
-9. `[WEB-SC-09]` **[High]** Hoàn tất đơn hàng E2E (Order Completion) hiển thị màn hình *THANK YOU FOR YOUR ORDER*.
-10. `[WEB-SC-10]` **[Low]** Đăng xuất an toàn khỏi hệ thống qua sidebar menu.
-
----
-
-## 🌿 Git Workflow & Hướng dẫn Clone
-```bash
-# 1. Clone repository về máy
-git clone https://gitlab.com/capstone_yah/saucedemo-ui-automation.git
-cd saucedemo-ui-automation
-
-# 2. Chuyển sang nhánh develop
-git checkout develop
-
-# 3. Tạo nhánh feature từ develop để làm bài
-git checkout -b feature/<ten-tinh-nang>-<ten-ban>
+```text
+saucedemo-ui-automation/
+├── .github/workflows/          # GitHub Actions CI pipeline
+├── src/
+│   ├── main/java/
+│   │   ├── pages/              # Page Object Classes
+│   │   │   ├── BasePage.java            # Explicit wait helpers & common driver actions
+│   │   │   ├── LoginPage.java           # Login locators & authentication flows
+│   │   │   ├── InventoryPage.java       # Product catalog, sorting & cart badge actions
+│   │   │   ├── CartPage.java            # Shopping cart management & item removal
+│   │   │   ├── CheckoutStepOnePage.java # User info input & validation error handling
+│   │   │   ├── CheckoutStepTwoPage.java # Order overview, item total & tax calculations
+│   │   │   └── CheckoutCompletePage.java# Order confirmation & dispatch verification
+│   │   └── utils/
+│   │       ├── ConfigReader.java        # Loads configuration from config.properties
+│   │       └── DriverFactory.java       # WebDriver initialization & teardown
+│   └── test/java/
+│       ├── utils/
+│       │   ├── AllureManager.java       # Allure attachment utilities (Screenshots)
+│       │   └── TestListener.java        # TestNG listener capturing failure screenshots
+│       └── web/
+│           ├── BaseTest.java            # Test setup/teardown lifecycle (@BeforeMethod, @AfterMethod)
+│           ├── LoginTest.java           # Multi-persona authentication & validation tests
+│           ├── ProductTest.java         # Product catalog sorting & price verification
+│           ├── CartTest.java            # Cart addition, item removal & badge count tests
+│           ├── CheckoutTest.java        # Checkout validations, calculations & E2E flows
+│           └── LogoutTest.java          # Session termination & safe sign-out tests
+├── src/test/resources/
+│   ├── config.properties       # Environment URL, browser selection, headless flag
+│   └── testng.xml              # TestNG suite runner configuration
+├── pom.xml                     # Maven dependencies, AspectJ weaver & Allure plugins
+└── README.md
 ```
-* **Nhánh chính**: `main` (Production/Demo), `develop` (Tích hợp phát triển).
-* **Nhánh tính năng gợi ý**: `feature/login-huy`, `feature/checkout-linh`.
 
 ---
 
-## 🛠️ Hướng dẫn chạy Test
+## 📋 Test Scenarios & Coverage Matrix
+
+| ID | Scenario | Priority | Test Class | Verification |
+| :--- | :--- | :---: | :--- | :--- |
+| **`WEB-SC-01`** | Login success with `standard_user` | **High** | `LoginTest` | Inventory URL redirect & catalog loaded |
+| **`WEB-SC-02`** | Login failure with `locked_out_user` | **High** | `LoginTest` | Error banner: *Sorry, this user has been locked out.* |
+| **`WEB-SC-03`** | Form validation on empty credentials | **Medium** | `LoginTest` | Error banner: *Username is required* |
+| **`WEB-SC-04`** | Sort products by Price (Low to High) | **Medium** | `ProductTest` | Price ordering mathematically validated |
+| **`WEB-SC-05`** | Add product to shopping cart | **High** | `CartTest` | Shopping cart badge counter updates to `1` |
+| **`WEB-SC-06`** | Remove product directly from Cart page | **Medium** | `CartTest` | Item deleted & badge counter disappears |
+| **`WEB-SC-07`** | Checkout Step 1: Validate postal code | **Medium** | `CheckoutTest` | Error banner: *Postal Code is required* |
+| **`WEB-SC-08`** | Checkout Step 2: Total calculation | **High** | `CheckoutTest` | Formula verified: `Item Total + Tax = Total` |
+| **`WEB-SC-09`** | Complete E2E Order Flow | **High** | `CheckoutTest` | Header verified: *THANK YOU FOR YOUR ORDER* |
+| **`WEB-SC-10`** | Logout via sidebar navigation | **Low** | `LogoutTest` | Session cleared, redirected to Login screen |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* **Java Development Kit (JDK)**: Version 17 or higher
+* **Apache Maven**: Version 3.8+
+* **Google Chrome / Mozilla Firefox / Microsoft Edge**: Up-to-date version
+
+### Clone Repository
 ```bash
-# Chạy có giao diện
+git clone https://github.com/huymert/saucedemo-ui-automation.git
+cd saucedemo-ui-automation
+```
+
+### Execution Commands
+
+```bash
+# Run full regression test suite (Headed mode)
 mvn clean test
 
-# Chạy Headless (Docker/CI)
+# Run tests in Headless mode (Recommended for CI/CD)
 mvn clean test -Dheadless=true
 
-# Xem Allure Report
+# Run with a specific browser (chrome / firefox / edge)
+mvn clean test -Dbrowser=firefox
+
+# Generate and launch Allure Report dashboard
 mvn allure:serve
 ```
+
+---
+
+## 📊 Test Reporting (Allure Report)
+
+Allure produces comprehensive, interactive HTML test reports that include:
+* Full test execution timeline and status breakdown (Passed, Failed, Skipped).
+* Step-by-step test execution details.
+* **Automatic failure screenshots** attached directly to failed test steps.
+* Environment details (OS, Java version, browser).
+
+```bash
+# Serve report directly in default browser
+mvn allure:serve
+
+# Or generate static HTML report into /target/site/allure-maven-plugin
+mvn allure:report
+```
+
+---
+
+## 👤 Author & Maintainer
+
+* **Hà Gia Huy** - Automation Test Engineer / SDET
+* **GitHub**: [@huymert](https://github.com/huymert)
+* **Email**: hahuyhgh@gmail.com
