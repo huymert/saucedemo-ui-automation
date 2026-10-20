@@ -125,8 +125,18 @@ mvn allure:report
 
 ---
 
-## 👤 Author & Maintainer
+## 👥 Project Team & Contributors
 
-* **Hà Gia Huy** - Automation Test Engineer / SDET
-* **GitHub**: [@huymert](https://github.com/huymert)
-* **Email**: hahuyhgh@gmail.com
+This project was developed by **Team 2** (Capstone Project) with clear ownership and responsibilities:
+
+* **Hà Gia Huy** ([@huymert](https://github.com/huymert)) — **Web UI Module Lead & SDET**:
+  * Designed the core Page Object Model (POM) architecture, thread-safe `DriverFactory`, and `BasePage` explicit wait helpers.
+  * Implemented test suites: Multi-persona Authentication (`standard_user`, `locked_out_user`, validation errors), Product Catalog browsing & price sorting (`ProductTest.java`), and secure logout (`LogoutTest.java`).
+  * Implemented `TestListener` and `AllureManager` for automatic failure screenshot capture.
+
+* **Nguyễn Khánh Linh** — **Web UI Automation Engineer**:
+  * Implemented Page Objects and End-to-End test suites for Shopping Cart operations (`CartPage.java`).
+  * Implemented multi-step checkout workflows (`CheckoutStepOnePage.java`, `CheckoutStepTwoPage.java`), tax/total calculation verification, and Order Completion (`CheckoutCompletePage.java`).
+
+* **Team Members (API Module)**: Lê Thị Hải Hà ([@muckkho2728](https://github.com/muckkho2728)), Trần Thị Quỳnh Chi ([@quynhchi03](https://github.com/quynhchi03)).
+* **Mentor & Project Advisor**: Mr. Vũ Lê Minh.
